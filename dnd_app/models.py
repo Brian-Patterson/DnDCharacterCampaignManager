@@ -24,7 +24,12 @@ class Character(models.Model):
     def __str__(self):
         return self.name
 
-# class CharacterForm(forms.ModelForm):
-#     class Meta:
-#         model = Character
-#         fields = '__all__'
+class Campaign(models.Model):
+    title = models.CharField(max_length=100)
+    schedule = models.DateTimeField(max_length=100)
+    frequency = models.CharField(max_length=100, choices=FREQUENCY_CHOICES)
+    currentNumber = models.SmallIntegerField(null=True)
+    neededNumber = models.SmallIntegerField(null=True)
+    location = models.CharField(max_length=100, choices=LOCATION_CHOICES)
+    details = models.TextField(max_length=500)
+

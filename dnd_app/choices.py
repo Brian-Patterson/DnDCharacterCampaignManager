@@ -80,3 +80,16 @@ SKILL_PROFICIENCY_CHOICES = [
 ('stealth', 'Stealth'),
 ('survival', 'Survival')
 ]
+
+FREQUENCY_CHOICES = [
+    ('once a week', 'Once A Week'),
+    ('every other week', 'Every Other Week'),
+    ('every two weeks', 'Every Two Weeks'),
+    ('once a month', 'Once A Month'),
+    ('other', 'Other')
+]
+
+LOCATION_CHOICES = [
+    ('in person', 'In Person'),
+    ('online', 'Online')
+]
