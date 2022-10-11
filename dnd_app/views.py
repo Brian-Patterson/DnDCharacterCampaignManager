@@ -5,9 +5,10 @@ from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 from dnd_app.models import Character
 from django.forms import modelformset_factory
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django import forms
 from django.views.generic import DetailView
+from django.urls import reverse
 # from extra_views import Model
 # Create your views  here.
 
@@ -30,7 +31,19 @@ class CharacterCreator(CreateView):
 
 class CharacterDetail(DetailView):
     model = Character
-    template_name = "character_detail.html"
+    template_name = "character_details.html"
+
+class CharacterUpdate(UpdateView):
+    model = Character
+    fields = ['name', 'race', 'subrace', 'class', 'background', 'skillProficiency', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']
+    template_name = 'character_update.html'
+    def get_success_url(self):
+        return reverse('character_detail', kwargs={'pk': self.object.pk})
+
+class CharacterDelete(DeleteView):
+    model = Character
+    template_name = "character_delete_confirmation.html"
+    success_url = "/characters/"
 
 # def character_creator(request):
 #     CharacterFormSet = modelformset_factory(Character, fields=('__all__'))

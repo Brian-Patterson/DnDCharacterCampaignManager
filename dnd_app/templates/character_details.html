@@ -1,4 +1,6 @@
-{% extends 'base.html %}
+{% extends 'base.html' %}
+{% block title%}Character{% endblock %}
+
 {% block content %}
 
 <div class="detail__name">
@@ -19,15 +21,17 @@
 </div>
 <div class="detail__container">
     <div class="buttons">
-        <a href="" class="button is-info">
+        <a href="{% url 'character_update' character.pk %}" class="button is-info"> Edit
             <span class="icon">
                 <i class="fas fa-edit"></i>
             </span>
         </a>
-        <a href="" class="button is-danger">
+        <a href="/characters/{{character.pk}}/delete" class="button is-danger"> Delete
             <span class="icon">
                 <i class="fas fa-trash-alt"></i>
             </span>
         </a>
     </div>
 </div>
+
+{% endblock %}

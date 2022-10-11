@@ -1,7 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block title%}Character Creator{% endblock %}
-
 
 {% block content %}
 
@@ -74,9 +71,10 @@
             <label for="{{ form.character.charisma.id_for_label }}">Charisma:</label>
             {{ form.charisma }}
         </div>
-        <input type="submit" value="Create Character" class="button is-success"/>
+        <input type="submit" value="Save Edits" class="button is-success"/>
     </form>
 
     
 
 {% endblock %}
+
