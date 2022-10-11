@@ -1,0 +1,24 @@
+class Character(models.Model):
+    name = models.CharField(max_length=100)
+    race = forms.ChoiceField(choices=RACE_CHOICES, label="race")
+    subrace = forms.ChoiceField(choices=SUBRACE_CHOICES, label="subrace")
+    job = forms.ChoiceField(choices=CLASS_CHOICES, label="class")
+    background = forms.ChoiceField(choices=BACKGROUND_CHOICES, label="background")
+    skillProficiency = forms.ChoiceField(choices=SKILL_PROFICIENCY_CHOICES, label="skill proficiency")
+    strength = models.IntegerField
+    dexterity = models.IntegerField
+    constitution = models.IntegerField
+    intelligence = models.IntegerField
+    wisdom = models.IntegerField
+    charisma = models.IntegerField
+    hitPoints = models.IntegerField
+
+    def __str__(self):
+        return self.__all__
+
+# class CharacterForm(forms.ModelForm):
+#     class Meta:
+#         model = Character
+#         fields = '__all__'
+
+//////////////////////////////////////////

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+<!-- {% load static %} -->
+{% block title%}Character Creator{% endblock %}
+
+
+{% block content %}
+
+    <h2 class="subtitle">
+        character creator form
+    </h2>
+
+    <form method="post">
+
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="fieldWrapper">
+            {{ form.name.errors }}
+            <label for="{{ form.character.name.id_for_label }}">Name:</label>
+            {{ form.name }}
+        </div>
+        <div class="fieldWrapper" id="race">
+            {{ form.race.errors }}
+            <label for="{{ form.character.race.id_for_label }}">Race:</label>
+            {{ form.race }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.subrace.errors }}
+            <label for="{{ form.character.subrace.id_for_label }}">Subrace:</label>
+            {{ form.subrace}}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.class.errors }}
+            <label for="{{ form.character.class.id_for_label }}">Class:</label>
+            {{ form.class }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.background.errors }}
+            <label for="{{ form.character.background.id_for_label }}">Background:</label>
+            {{ form.background }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.skillProficiency.errors }}
+            <label for="{{ form.character.skillProficiency.id_for_label }}">Skill Proficiencies:</label>
+            {{ form.skillProficiency }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.strength.errors }}
+            <label for="{{ form.character.strength.id_for_label }}">Strength:</label>
+            {{ form.strength }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.dexterity.errors }}
+            <label for="{{ form.character.dexterity.id_for_label }}">Dexterity:</label>
+            {{ form.dexterity }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.constitution.errors }}
+            <label for="{{ form.character.constitution.id_for_label }}">Constitution:</label>
+            {{ form.constitution }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.intelligence.errors }}
+            <label for="{{ form.character.intelligence.id_for_label }}">Intelligence:</label>
+            {{ form.intelligence }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.wisdom.errors }}
+            <label for="{{ form.character.wisdom.id_for_label }}">Wisdom:</label>
+            {{ form.wisdom }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.charisma.errors }}
+            <label for="{{ form.character.charisma.id_for_label }}">Charisma:</label>
+            {{ form.charisma }}
+        </div>
+        <input type="submit" value="Create Character"/>
+    </form>
+
+    
+
+{% endblock %}
