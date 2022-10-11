@@ -8,9 +8,9 @@ from .choices import *
 # Create your models here.
 class Character(models.Model):
     name = models.CharField(max_length=100, null=True)
-    race = models.CharField(max_length=100, choices=RACE_CHOICES)
-    subrace = models.CharField(max_length=100, choices=SUBRACE_CHOICES)
-    job = models.CharField(max_length=100, choices=CLASS_CHOICES, name='class')
+    race = models.CharField(max_length=100, choices=RACE_CHOICES, null=True)
+    subrace = models.CharField(max_length=100, choices=SUBRACE_CHOICES, null=True)
+    job = models.CharField(max_length=100, choices=CLASS_CHOICES, name='class', null=True)
     background = models.CharField(max_length=100, choices=BACKGROUND_CHOICES)
     skillProficiency = models.CharField(max_length=100, choices=SKILL_PROFICIENCY_CHOICES)
     strength = models.SmallIntegerField(null=True)
@@ -22,7 +22,7 @@ class Character(models.Model):
     hitPoints = models.SmallIntegerField(null=True)
 
     def __str__(self):
-        return self.__all__
+        return self.name
 
 # class CharacterForm(forms.ModelForm):
 #     class Meta:

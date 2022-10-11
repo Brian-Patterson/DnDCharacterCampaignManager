@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-<!-- {% load static %} -->
+{% load static %}
 {% block title%}Character Creator{% endblock %}
 
 
@@ -14,7 +14,7 @@
         {% csrf_token %}
         {{ form.non_field_errors }}
 
-        <div class="fieldWrapper">
+        <div class="fieldWrapper" action="">
             {{ form.name.errors }}
             <label for="{{ form.character.name.id_for_label }}">Name:</label>
             {{ form.name }}
@@ -24,10 +24,10 @@
             <label for="{{ form.character.race.id_for_label }}">Race:</label>
             {{ form.race }}
         </div>
-        <div class="fieldWrapper">
+        <div class="fieldWrapper" >
             {{ form.subrace.errors }}
             <label for="{{ form.character.subrace.id_for_label }}">Subrace:</label>
-            {{ form.subrace}}
+            {{ form.subrace }}
         </div>
         <div class="fieldWrapper">
             {{ form.class.errors }}
@@ -74,7 +74,7 @@
             <label for="{{ form.character.charisma.id_for_label }}">Charisma:</label>
             {{ form.charisma }}
         </div>
-        <input type="submit" value="Create Character"/>
+        <input type="submit" value="Create Character" class="button is-success"/>
     </form>
 
     

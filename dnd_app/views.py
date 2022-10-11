@@ -7,6 +7,7 @@ from dnd_app.models import Character
 from django.forms import modelformset_factory
 from django.views.generic.edit import CreateView
 from django import forms
+from django.views.generic import DetailView
 # from extra_views import Model
 # Create your views  here.
 
@@ -16,11 +17,20 @@ class Home(TemplateView):
 class Characters(TemplateView):
     template_name = "characters.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["characters"] = Character.objects.all()
+        return context
+
 class CharacterCreator(CreateView):
     model = Character
-    fields = '__all__'
+    fields = ['name', 'race', 'subrace', 'class', 'background', 'skillProficiency', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']
     template_name = "character_creator.html"
     success_url = "/characters/"
+
+class CharacterDetail(DetailView):
+    model = Character
+    template_name = "character_detail.html"
 
 # def character_creator(request):
 #     CharacterFormSet = modelformset_factory(Character, fields=('__all__'))

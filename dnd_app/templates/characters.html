@@ -6,5 +6,14 @@
     <h2 class="subtitle">
         columns of made characters
     </h2>
-
+    <a href="{% url 'character_creator' %}">
+        <button class="button is-link">Create New Character</button>
+    </a>
+    {% for character in characters %}
+        <a href="{% url 'character_detail' character.pk %}">
+            <div class="card">
+                <p>{{ character.name }}</p>
+            </div>
+        </a>
+    {% endfor %}
 {% endblock %}
