@@ -11,6 +11,9 @@ from django.views.generic import DetailView
 from django.urls import reverse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
 # from extra_views import Model
 # Create your views  here.
 
@@ -19,16 +22,8 @@ class Home(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["campaigns"] = Campaign.objects.all()
-        return context
-
-class Characters(TemplateView):
-    template_name = "characters.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name")
-        if name != NONE:
+        if name != None:
             context["characters"] = Character.objects.filter(name__icontains=name, user=self.request.user)
             context["header"] = f"Searching for {name}"
         else:
@@ -36,12 +31,39 @@ class Characters(TemplateView):
             context["header"] = "Your Characters"
         return context
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["campaigns"] = Campaign.objects.all()
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Characters(TemplateView):
+    template_name = "characters.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        name = self.request.GET.get("name")
+        if name != None:
+            context["characters"] = Character.objects.filter(name__icontains=name, user=self.request.user)
+            context["header"] = f"Searching for {name}"
+        else:
+            context["characters"] = Character.objects.filter(user=self.request.user)
+            context["header"] = "Your Characters"
+        return context
+
+@method_decorator(login_required, name='dispatch')
 class Campaigns(TemplateView):
     template_name = "campaigns.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["campaigns"] = Campaign.objects.all()
+        name = self.request.GET.get("name")
+        if name != None:
+            context["campaigns"] = Campaign.objects.filter(name__icontains=name, user=self.request.user)
+            context["header"] = f"Searching for {name}"
+        else:
+            context["campaigns"] = Campaign.objects.filter(user=self.request.user)
+            context["header"] = "Your Campaigns"
         return context
 
 class CharacterCreator(CreateView):
@@ -71,8 +93,16 @@ class CampgainDetail(DetailView):
     template_name = "campaign_details.html"
 
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        context["characters"] = Character.objects.all()
+        context = super().get_context_data(**kwargs)
+        name = self.request.GET.get("name")
+        if name != None:
+            context["characters"] = Character.objects.filter(name__icontains=name, user=self.request.user)
+            context["campaigns"] = Campaign.objects.filter(name__icontains=name, user=self.request.user)
+            context["header"] = f"Searching for {name}"
+        else:
+            context["characters"] = Character.objects.filter(user=self.request.user)
+            context["campaigns"] = Campaign.objects.filter(user=self.request.user)
+            context["header"] = "Your Campaigns"
         return context
 
 class CharacterUpdate(UpdateView):
@@ -88,6 +118,7 @@ class CampaignUpdate(UpdateView):
     template_name = 'campaign_update.html'
     def get_success_url(self):
         return reverse('campaigns_detail', kwargs={'pk': self.object.pk})
+    
 
 class CharacterDelete(DeleteView):
     model = Character

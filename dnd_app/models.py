@@ -22,7 +22,7 @@ class Character(models.Model):
     wisdom = models.SmallIntegerField(null=True)
     charisma = models.SmallIntegerField(null=True)
     hitPoints = models.SmallIntegerField(null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='characters', default=1)
     # campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="characters", null=True)
 
     def __str__(self):
@@ -37,7 +37,8 @@ class Campaign(models.Model):
     location = models.CharField(max_length=100, choices=LOCATION_CHOICES)
     details = models.TextField(max_length=500)
     characters = models.ManyToManyField(Character)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='campaigns', default=1)
 
     def __str__(self):
         return self.title
+

@@ -14,5 +14,6 @@ urlpatterns = [
     path('campaigns/<int:pk>/update', views.CampaignUpdate.as_view(), name="campaign_update"),
     path('campaigns/<int:pk>/delete', views.CampaignDelete.as_view(), name="campaign_delete"),
     path('campaigns/<int:pk>/characters/<int:character_pk>/', views.CampaignCharacterAssoc.as_view(), name="campaign_character_assoc"),
+    path('accounts/signup', views.Signup.as_view(), name="signup"),
 
 ]

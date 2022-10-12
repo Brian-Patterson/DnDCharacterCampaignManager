@@ -14,6 +14,22 @@
     <h2 class="title is-4">{{ campaign.location }}</h2>
     <h2 class="title is-4">{{ campaign.details }}</h2>
 </div>
+{% if campaign.user.id != user.id %}
+<div class="detail__container">
+    <div class="buttons">
+        <a href="{% url 'campaign_update' campaign.pk %}" class="button is-info is-hidden"> Edit
+            <span class="icon">
+                <i class="fas fa-edit"></i>
+            </span>
+        </a>
+        <a href="{% url 'campaign_delete' campaign.pk %}" class="button is-danger is-hidden"> Delete
+            <span class="icon">
+                <i class="fas fa-trash-alt"></i>
+            </span>
+        </a>
+    </div>
+</div>
+{% else %}
 <div class="detail__container">
     <div class="buttons">
         <a href="{% url 'campaign_update' campaign.pk %}" class="button is-info"> Edit
@@ -28,6 +44,8 @@
         </a>
     </div>
 </div>
+{% endif %}
+
 <div class="detail__characters mb-5">
     <h3 class="name is-3">Current Players</h3>
 
@@ -38,6 +56,12 @@
                 <span>{{ character.race }}</span>
                 <span>{{ character.class }}</span>
             </h4>
+                <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=remove"
+                    class="button is-danger is-outlined">
+                    <span class="icon is-small">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </a>
         </div>
     {% empty %}
         <article class="message">
@@ -53,25 +77,31 @@
 <div class="detail__character mb-5">
 
     <h3 class="title is-3">Add Characters</h3>
-    {% for character in characters %}
-        <span>
-            <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=add">
-                <button class="button">
-                    <span>Add to Campaign</span>
-                </button>
-                <div class="character">
-                    <span>{{character.name}}: {{character.race}} {{character.class}}</span>
+    {% if user.is_authenticated %}
+        {% for character in characters.all %}
+            <span>
+                <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=add">
+                    <button class="button">
+                        <span>Add to Campaign</span>
+                    </button>
+                    <div class="character">
+                        <span>{{character.name}}: {{character.race}} {{character.class}}</span>
+                    </div>
+                </a>       
+            </span>
+        {% empty %}
+            <article class="message">
+                <div class="message-header">
+                    <p>No Characters Available</p>
                 </div>
-            </a>       
-        </span>
-    {% empty %}
-        <article class="message">
-            <div class="message-header">
-                <p>No Characters Available</p>
-            </div>
-        </article>
-
-    {% endfor %}
+            </article>
+        {% endfor %}
+    {% else %}
+    <span class="button is-primary">
+        <a class="button is-light" href="{% url 'login' %}">Log in</a>
+        <a class="button is-light" href="{% url 'signup' %}">Sign Up</a>
+    </span>
+    {% endif %}
 </div>
 
 {% endblock %}
