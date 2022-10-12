@@ -9,6 +9,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django import forms
 from django.views.generic import DetailView
 from django.urls import reverse
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 # from extra_views import Model
 # Create your views  here.
 
@@ -25,7 +27,13 @@ class Characters(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["characters"] = Character.objects.all()
+        name = self.request.GET.get("name")
+        if name != NONE:
+            context["characters"] = Character.objects.filter(name__icontains=name, user=self.request.user)
+            context["header"] = f"Searching for {name}"
+        else:
+            context["characters"] = Character.objects.filter(user=self.request.user)
+            context["header"] = "Your Characters"
         return context
 
 class Campaigns(TemplateView):
@@ -40,7 +48,13 @@ class CharacterCreator(CreateView):
     model = Character
     fields = ['name', 'race', 'subrace', 'class', 'background', 'skillProficiency', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']
     template_name = "character_creator.html"
-    success_url = "/characters/"
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(CharacterCreator, self).form_valid(form)
+    def get_success_url(self):
+        print(self.kwargs)
+        return reverse('character_detail', kwargs={'pk': self.object.pk})
+
 
 class CampgaignCreator(CreateView):
     model = Campaign
@@ -93,6 +107,21 @@ class CampaignCharacterAssoc(View):
         if assoc == "add":
             Campaign.objects.get(pk=pk).characters.add(character_pk)
         return redirect('home')
+
+class Signup(View):
+    def get(self, request):
+        form = UserCreationForm()
+        context ={"form": form}
+        return render(request, "registration/signup.html", context)
+    def post(self,request):
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("home")
+        else: 
+            context = {"form": form}
+            return render(request, "registration/signup.html", context)
 
 # def character_creator(request):
 #     CharacterFormSet = modelformset_factory(Character, fields=('__all__'))
