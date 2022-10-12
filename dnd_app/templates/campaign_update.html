@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post">
+
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="fieldWrapper" action="">
+        {{ form.title.errors }}
+        <label for="{{ form.campaign.title.id_for_label }}">Title:</label>
+        {{ form.title }}
+    </div>
+    <div class="fieldWrapper" action="">
+        {{ form.schedule.errors }}
+        <label for="{{ form.campaign.schedule.id_for_label }}">Schedule:</label>
+        {{ form.schedule }}
+    </div>
+    <div class="fieldWrapper" action="">
+        {{ form.frequency.errors }}
+        <label for="{{ form.campaign.frequency.id_for_label }}">Frequency:</label>
+        {{ form.frequency }}
+    </div>
+    <div class="fieldWrapper" action="">
+        {{ form.currentNumber.errors }}
+        <label for="{{ form.campaign.currentNumber.id_for_label }}">Current Amount of Players:</label>
+        {{ form.currentNumber }}
+    </div>
+    <div class="fieldWrapper" action="">
+        {{ form.neededNumber.errors }}
+        <label for="{{ form.campaign.neededNumber.id_for_label }}">Amount of Players Needed:</label>
+        {{ form.neededNumber }}
+    </div>
+    <div class="fieldWrapper" action="">
+        {{ form.location.errors }}
+        <label for="{{ form.campaign.location.id_for_label }}">Location:</label>
+        {{ form.location }}
+    </div>
+    <div class="fieldWrapper" action="">
+        {{ form.details.errors }}
+        <label for="{{ form.campaign.details.id_for_label }}">Details:</label>
+        {{ form.details }}
+    </div>
+    
+    <input type="submit" value="Save Edits" class="button is-success"/>
+</form>
+
+{% endblock %}

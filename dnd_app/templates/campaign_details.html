@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title%}Campaign{% endblock %}
+
+{% block content %}
+
+<div class="detail__name">
+    <h1 class="title">{{ campaign.title }}</h1>
+</div>
+<div class="detail__about">
+    <h2 class="title is-4">{{ campaign.schedule }}</h2>
+    <h2 class="title is-4">{{ campaign.frequency }}</h2>
+    <h2 class="title is-4">{{ campaign.currentNumber }}</h2>
+    <h2 class="title is-4">{{ campaign.neededNumber }}</h2>
+    <h2 class="title is-4">{{ campaign.location }}</h2>
+    <h2 class="title is-4">{{ campaign.details }}</h2>
+</div>
+<div class="detail__container">
+    <div class="buttons">
+        <a href="{% url 'campaign_update' campaign.pk %}" class="button is-info"> Edit
+            <span class="icon">
+                <i class="fas fa-edit"></i>
+            </span>
+        </a>
+        <a href="{% url 'campaign_delete' campaign.pk %}" class="button is-danger"> Delete
+            <span class="icon">
+                <i class="fas fa-trash-alt"></i>
+            </span>
+        </a>
+    </div>
+</div>
+<div class="detail__characters mb-5">
+    <h3 class="name is-3">Current Players</h3>
+
+    {% for character in campaign.characters.all %}
+        <div class="character">
+            <h4>
+                <span>{{ character.name }}</span>
+                <span>{{ character.race }}</span>
+                <span>{{ character.class }}</span>
+            </h4>
+        </div>
+    {% empty %}
+        <article class="message">
+            <div class="message-header">
+                <p>No Current Players</p>
+            </div>
+        </article>
+    {% endfor %}
+</div>
+
+<div class="detail__container">
+    <!-- inside container -->
+<div class="detail__character mb-5">
+
+    <h3 class="title is-3">Add Characters</h3>
+    {% for character in characters %}
+        <span>
+            <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=add">
+                <button class="button">
+                    <span>Add to Campaign</span>
+                </button>
+                <div class="character">
+                    <span>{{character.name}}: {{character.race}} {{character.class}}</span>
+                </div>
+            </a>       
+        </span>
+    {% empty %}
+        <article class="message">
+            <div class="message-header">
+                <p>No Characters Available</p>
+            </div>
+        </article>
+
+    {% endfor %}
+</div>
+
+{% endblock %}

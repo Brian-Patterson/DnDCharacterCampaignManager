@@ -93,3 +93,14 @@ LOCATION_CHOICES = [
     ('in person', 'In Person'),
     ('online', 'Online')
 ]
+
+DAYS_CHOICES = [
+    ('monday', 'Monday'),
+    ('tuesday', 'Tuesday'),
+    ('wednesday', 'Wednesday'),
+    ('thursday', 'Thursday'),
+    ('friday', 'Friday'),
+    ('saturday', 'Saturday'),
+    ('sunday', 'Sunday')
+]
+

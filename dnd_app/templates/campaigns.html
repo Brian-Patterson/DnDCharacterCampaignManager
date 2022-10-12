@@ -1,12 +1,5 @@
 {% extends 'base.html' %}
-{% block title%}Home{% endblock %}
-
 {% block content %}
-<h1>BnB Home</h1>
-
-<a href="{% url 'character_creator' %}">
-    <button class="button is-link">Create New Character</button>
-</a>
 
 <h2 class="subtitle">
     columns of made campaigns
@@ -17,10 +10,9 @@
 {% for campaign in campaigns %}
     <a href="{% url 'campaigns_detail' campaign.pk %}">
         <div class="card">
-            <p>{{ campaign.title }}</p>
+            <p>{{ campaign.title}}</p>
         </div>
     </a>
 {% endfor %}
 
 {% endblock %}
-
