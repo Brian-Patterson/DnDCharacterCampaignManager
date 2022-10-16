@@ -3,21 +3,54 @@
 
 {% block content %}
 
-<div class="detail__name">
-    <h1 class="title">{{ character.name }}</h1>
-</div>
+<section class="hero">
+    <div class="hero-body">
+        <p class="title">{{ character.name }}</p>
+        <p class="subtitle">{{ character.subrace }} | {{ character.class }}</p>
+    </div>
+</section>
+
+<nav class="level">
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Strength</p>
+            <p class="title>">{{ character.strength }}</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Dexterity</p>
+            <p class="title>">{{ character.dexterity }}</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Constitution</p>
+            <p class="title>">{{ character.constitution }}</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Intelligence</p>
+            <p class="title>">{{ character.intelligence }}</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Wisdom</p>
+            <p class="title>">{{ character.wisdom }}</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Charisma</p>
+            <p class="title>">{{ character.charisma }}</p>
+        </div>
+    </div>
+</nav>
 <div class="detail__about">
-    <h2 class="title is-4">{{ character.race }}</h2>
-    <h2 class="title is-4">{{ character.subrace }}</h2>
-    <h2 class="title is-4">{{ character.class }}</h2>
     <h2 class="title is-4">{{ character.background }}</h2>
     <h2 class="title is-4">{{ character.skillProficiency }}</h2>
-    <h2 class="title is-4">{{ character.strength }}</h2>
-    <h2 class="title is-4">{{ character.dexterity }}</h2>
-    <h2 class="title is-4">{{ character.constitution }}</h2>
-    <h2 class="title is-4">{{ character.intelligence }}</h2>
-    <h2 class="title is-4">{{ character.wisdom }}</h2>
-    <h2 class="title is-4">{{ character.charisma }}</h2>
 </div>
 <div class="detail__container">
     <div class="buttons">

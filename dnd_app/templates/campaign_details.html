@@ -6,14 +6,31 @@
 <div class="detail__name">
     <h1 class="title">{{ campaign.title }}</h1>
 </div>
-<div class="detail__about">
-    <h2 class="title is-4">{{ campaign.schedule }}</h2>
-    <h2 class="title is-4">{{ campaign.frequency }}</h2>
-    <h2 class="title is-4">{{ campaign.currentNumber }}</h2>
-    <h2 class="title is-4">{{ campaign.neededNumber }}</h2>
-    <h2 class="title is-4">{{ campaign.location }}</h2>
-    <h2 class="title is-4">{{ campaign.details }}</h2>
-</div>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Schedule</th>
+            <td>{{ campaign.schedule }}</td>
+        </tr>
+        <tr>
+            <th>Frequency</th>
+            <td>{{ campaign.frequency }}</td>
+        </tr>
+        <tr>
+            <th>Current Number of Players</th>
+            <td>{{ campaign.currentNumber }}</td>
+        </tr>
+        <tr>
+            <th>Number of Players Needed</th>
+            <td>{{ campaign.neededNumber }}</td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td>{{ campaign.location }}</td>
+        </tr>
+    </tbody>
+</table>
+
 {% if campaign.user.id != user.id %}
 <div class="detail__container">
     <div class="buttons">
@@ -50,20 +67,20 @@
     <h3 class="name is-3">Current Players</h3>
 
     {% for character in campaign.characters.all %}
-        <div class="character">
-            <h4>
-                <span>{{ character.name }}</span>
-                <span>{{ character.race }}</span>
-                <span>{{ character.class }}</span>
-            </h4>
-            {% if character.user.id == user.id %}
-            <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=remove"
-                class="button is-danger is-outlined">
-                <span class="icon is-small">
-                    <i class="fas fa-times"></i>
-                </span>
-            </a>
-            {% endif %}
+        <div class="columns is-centered">
+            <div class="column">
+                {{ character.name }}
+                {{ character.subrace }}
+                {{ character.class }}
+                {% if character.user.id == user.id %}
+                    <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=remove"
+                    class="button is-danger is-outlined">
+                    <span class="icon is-small">
+                        <i class="fas fa-times"></i>
+                    </span>
+                    </a>
+                {% endif %}
+            </div>
         </div>
     {% empty %}
         <article class="message">
