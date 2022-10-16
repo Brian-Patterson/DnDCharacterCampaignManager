@@ -28,6 +28,8 @@ class Character(models.Model):
     def __str__(self):
         return self.name
 
+
+
 class Campaign(models.Model):
     title = models.CharField(max_length=100)
     schedule = models.CharField(max_length=100, choices=DAYS_CHOICES)

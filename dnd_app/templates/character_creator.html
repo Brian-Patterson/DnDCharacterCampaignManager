@@ -16,15 +16,15 @@
 
         <div class="fieldWrapper" action="">
             {{ form.name.errors }}
-            <label for="{{ form.character.name.id_for_label }}">Name:</label>
+            <label for="{{ form.character.name.id_for_label }}" type="input">Name:</label>
             {{ form.name }}
         </div>
-        <div class="fieldWrapper" id="race">
+        <div class="fieldWrapper race">
             {{ form.race.errors }}
             <label for="{{ form.character.race.id_for_label }}">Race:</label>
             {{ form.race }}
         </div>
-        <div class="fieldWrapper" >
+        <div class="fieldWrapper subrace">
             {{ form.subrace.errors }}
             <label for="{{ form.character.subrace.id_for_label }}">Subrace:</label>
             {{ form.subrace }}
@@ -76,7 +76,6 @@
         </div>
         <input type="submit" value="Create Character" class="button is-success"/>
     </form>
-
     
 
 {% endblock %}

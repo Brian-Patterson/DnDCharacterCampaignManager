@@ -1,21 +1,62 @@
+from dataclasses import dataclass
 from urllib import request
 from django.shortcuts import redirect, render
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic.base import TemplateView
 from dnd_app.models import Campaign, Character
 from django.forms import modelformset_factory
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django import forms
-from django.views.generic import DetailView
-from django.urls import reverse
+from django.views.generic import DetailView, ListView
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
+import json, requests, asyncio
+from .serializers import CharacterSerializer
+
+
 # from extra_views import Model
 # Create your views  here.
+def api(request):
+
+    # url = f"https://www.dnd5eapi.co/api/classes/"
+    # response = requests.get(url)
+    # data = response.json()
+    # print(data)
+    # spelled = []
+    # spell = data
+    # spelled.append(spell)
+    url = f"https://www.dnd5eapi.co/api/classes/"
+    response = requests.get(url)
+    data = response.json()
+    print(data)
+    spelled = []
+    for i in range(data['count']):
+        spell = data['results'][i]['url']
+        spelled.append(spell)
+    
+    
+    filled = []
+    for i in range(data['count']):
+        source = f"https://www.dnd5eapi.co{spelled[i]}"
+        response = requests.get(source)
+        dottie = response.json()
+        filled.append(dottie)
+
+
+    context = {
+        'data':data,
+        'spell_loop': range(data['count']),
+        'spelled': spelled,
+        'filled': filled,
+
+
+    }
+    return render(request, 'api.html', context)
+
 
 class Home(TemplateView):
     template_name = "home.html"
@@ -76,13 +117,24 @@ class CharacterCreator(CreateView):
     def get_success_url(self):
         print(self.kwargs)
         return reverse('character_detail', kwargs={'pk': self.object.pk})
+    def form_choice(request):
+        
+        race_id = request.GET.get('race')
+        subrace = Race.objects.filter(race_id=race_id)
+        return render(request, 'dropdown_subraces.html', {'subrace': subrace})
 
 
 class CampgaignCreator(CreateView):
     model = Campaign
     fields = ['title', 'schedule', 'frequency', 'currentNumber', 'neededNumber', 'location', 'details']
     template_name = "campaign_creator.html"
-    success_url = "/campaigns/"
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(CampgaignCreator, self).form_valid(form)
+    def get_success_url(self):
+        print(self.kwargs)
+        return reverse('campaigns_detail', kwargs={'pk': self.object.pk})
+
 
 class CharacterDetail(DetailView):
     model = Character
@@ -154,6 +206,32 @@ class Signup(View):
             context = {"form": form}
             return render(request, "registration/signup.html", context)
 
+class NewsDataView(TemplateView):
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        news_data = requests.get(
+            'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=ece95912ea3746e68826c8eb30e2eb66')
+        context['newsdata'] = json.dumps(news_data.json(),
+                                         sort_keys=True,
+                                         indent=4)
+        return context
+
+def home(request):
+    response = requests.get('https://www.dnd5eapi.co/api/')
+    response.text
+    print(response)
+    return render(request, 'home.html', {
+        print(response.text)
+    })
+
+def load_subraces(request):
+    race_id = request.GET.get('race')
+    subrace = Race.objects.filter(race_id=race_id)
+    return render(request, 'dropdown_subraces.html', {'subrace': subrace})
+
 # def character_creator(request):
 #     CharacterFormSet = modelformset_factory(Character, fields=('__all__'))
 #     if request.method == 'POST':
@@ -180,3 +258,4 @@ class Signup(View):
 #         form = CharacterForm()
 #     context['form'] = form
 #     return render(request, 'home.html', context)
+

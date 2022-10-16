@@ -15,5 +15,7 @@ urlpatterns = [
     path('campaigns/<int:pk>/delete', views.CampaignDelete.as_view(), name="campaign_delete"),
     path('campaigns/<int:pk>/characters/<int:character_pk>/', views.CampaignCharacterAssoc.as_view(), name="campaign_character_assoc"),
     path('accounts/signup', views.Signup.as_view(), name="signup"),
-
+    
+    path('api/', views.api, name='api'),
+    path('ajax/load-subraces/', views.load_subraces, name='ajax_load_subraces')
 ]

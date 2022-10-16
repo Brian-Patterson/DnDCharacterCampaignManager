@@ -56,12 +56,14 @@
                 <span>{{ character.race }}</span>
                 <span>{{ character.class }}</span>
             </h4>
-                <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=remove"
-                    class="button is-danger is-outlined">
-                    <span class="icon is-small">
-                        <i class="fas fa-times"></i>
-                    </span>
-                </a>
+            {% if character.user.id == user.id %}
+            <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=remove"
+                class="button is-danger is-outlined">
+                <span class="icon is-small">
+                    <i class="fas fa-times"></i>
+                </span>
+            </a>
+            {% endif %}
         </div>
     {% empty %}
         <article class="message">
