@@ -1,1 +1,1 @@
-web: gunicorn dnd-project-four.wsgi
+web: gunicorn capstone_project.wsgi
