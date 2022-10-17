@@ -48,10 +48,19 @@
         </div>
     </div>
 </nav>
-<div class="detail__about">
-    <h2 class="title is-4">{{ character.background }}</h2>
-    <h2 class="title is-4">{{ character.skillProficiency }}</h2>
-</div>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Background</th>
+            <td>{{ character.background }}</td>
+        </tr>
+        <tr>
+            <th>Skill Proficiencies</th>
+            <td>{{ character.skillProficiency }}</td>
+        </tr>
+    </tbody>
+</table>
+</table>
 <div class="detail__container">
     <div class="buttons">
         <a href="{% url 'character_update' character.pk %}" class="button is-info"> Edit

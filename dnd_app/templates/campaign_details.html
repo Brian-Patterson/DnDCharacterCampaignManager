@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title%}Campaign{% endblock %}
-
+{% load static %}
 {% block content %}
 
 <div class="detail__name">
@@ -30,6 +30,10 @@
         </tr>
     </tbody>
 </table>
+<div class="box">
+    <h3 class="title">Details</h3>
+    {{ campaign.details}}
+</div>
 
 {% if campaign.user.id != user.id %}
 <div class="detail__container">
@@ -64,7 +68,7 @@
 {% endif %}
 
 <div class="detail__characters mb-5">
-    <h3 class="name is-3">Current Players</h3>
+    <h3 class="name title">Current Players</h3>
 
     {% for character in campaign.characters.all %}
         <div class="columns is-centered">
@@ -99,14 +103,14 @@
     {% if user.is_authenticated %}
         {% for character in characters.all %}
             <span>
-                <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=add">
-                    <button class="button">
+                <button class="button">
+                    <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=add">
                         <span>Add to Campaign</span>
-                    </button>
-                    <div class="character">
-                        <span>{{character.name}}: {{character.race}} {{character.class}}</span>
-                    </div>
-                </a>       
+                        <div class="character">
+                            <span>{{character.name}}: {{character.race}} {{character.class}}</span>
+                        </div>
+                    </a>       
+                </button>
             </span>
         {% empty %}
             <article class="message">
