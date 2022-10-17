@@ -111,11 +111,6 @@ class CharacterCreator(CreateView):
     def get_success_url(self):
         print(self.kwargs)
         return reverse('character_detail', kwargs={'pk': self.object.pk})
-    def form_choice(request):
-        
-        race_id = request.GET.get('race')
-        subrace = Race.objects.filter(race_id=race_id)
-        return render(request, 'dropdown_subraces.html', {'subrace': subrace})
 
 
 class CampgaignCreator(CreateView):
@@ -220,11 +215,6 @@ def home(request):
     return render(request, 'home.html', {
         print(response.text)
     })
-
-def load_subraces(request):
-    race_id = request.GET.get('race')
-    subrace = Race.objects.filter(race_id=race_id)
-    return render(request, 'dropdown_subraces.html', {'subrace': subrace})
 
 # def character_creator(request):
 #     CharacterFormSet = modelformset_factory(Character, fields=('__all__'))
