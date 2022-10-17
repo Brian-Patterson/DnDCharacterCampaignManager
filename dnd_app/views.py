@@ -1,21 +1,15 @@
-from dataclasses import dataclass
-from urllib import request
 from django.shortcuts import redirect, render
 from django.views import View
-from django.http import HttpResponse, JsonResponse
 from django.views.generic.base import TemplateView
 from dnd_app.models import Campaign, Character
-from django.forms import modelformset_factory
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.contrib.auth.models import User
-import json, requests, asyncio
-from .serializers import CharacterSerializer
+
 
 
 # from extra_views import Model
