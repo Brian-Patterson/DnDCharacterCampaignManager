@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dnd_app',
-    'extra_views',
-    'rest_framework',
     'corsheaders',
 ]
 
@@ -141,4 +139,5 @@ LOGOUT_REDIRECT_URL = ''
 
 import django_heroku
 django_heroku.settings(locals())
+
 
