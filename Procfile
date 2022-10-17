@@ -1,1 +1,1 @@
-web: gunicorn dnd.wsgi
+web: gunicorn dnd-project-4.wsgi
