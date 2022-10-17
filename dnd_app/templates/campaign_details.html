@@ -103,11 +103,11 @@
     {% if user.is_authenticated %}
         {% for character in characters.all %}
             <span>
-                <button class="button">
+                <button class="button has-background-success">
                     <a href="{% url 'campaign_character_assoc' campaign.pk character.pk %}?assoc=add">
-                        <span>Add to Campaign</span>
+                        <span class="has-text-dark">Add to Campaign</span>
                         <div class="character">
-                            <span>{{character.name}}: {{character.race}} {{character.class}}</span>
+                            <span class="has-text-dark">{{character.name}}: {{character.race}} {{character.class}}</span>
                         </div>
                     </a>       
                 </button>
